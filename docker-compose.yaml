@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  front:
+    build:
+      context: .
+    image: nodejs
+    container_name: nodejs
+    restart: unless-stopped
+    expose:
+      - 8080
+      - 5173
+    ports:
+      - "8080:8080"
+      - "5173:5173"
+    working_dir: /home/node/app
+    volumes:
+      - ./front:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - appnetwork
+    command: npm run dev
+
+networks:
+  appnetwork:
+    driver: bridge
+
+volumes:
+  node_modules: 
